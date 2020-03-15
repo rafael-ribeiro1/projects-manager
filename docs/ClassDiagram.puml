@@ -1,0 +1,40 @@
+@startuml
+hide methods
+left to right direction
+
+title Projects Manager - Class Diagram
+
+class Project {
+    -int idProj
+    -String nameProj
+    -String abstractProj
+    -String descProj
+    -String funcProj
+    -int state
+    -int nReq
+}
+class Study {
+    -int idStu
+    -String nameStu
+    -String from
+    -String link
+    -int nMod
+}
+class Requirement {
+    -int idReq
+    -int projId
+    -int studyId
+    -String req
+}
+class Module {
+    -int idMod
+    -int studyId
+    -String title
+    -int state
+}
+
+Project "1" -- "*" Requirement: have >
+Requirement "1" -- "0..1" Study: is >
+Study "1" -- "*" Module: have >
+
+@enduml
