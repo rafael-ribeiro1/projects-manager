@@ -11,6 +11,12 @@ public class Requirement {
     private final String REQ_DEFAULT = "";
 
     public Requirement() {}
+    public Requirement(int idReq, int projId, int studyId, String req) {
+        this.idReq = idReq;
+        this.projId = projId;
+        this.studyId = studyId;
+        this.req = req;
+    }
     public Requirement(int idReq, int projId, int studyId) {
         this.idReq = idReq;
         this.projId = projId;

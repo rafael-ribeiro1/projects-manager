@@ -17,22 +17,22 @@ public class Project implements State {
     private final String SEPARATOR = "/0//1/";
 
     public Project() {}
-    public Project(int idProj, String nameProj, String abstractProj, String descProj, String funcProj, int state) {
+    public Project(int idProj, String nameProj, String abstractProj, String descProj, String funcProj, int state, int nReq) {
         this.idProj = idProj;
         this.nameProj = nameProj;
         this.abstractProj = abstractProj;
         this.descProj = descProj;
         this.funcProj = funcProj;
         this.state = state;
-        this.nReq = NREQ_DEFAULT;
+        this.nReq = nReq;
     }
-    public Project(String nameProj, String abstractProj, String descProj, String funcProj, int state, int nReq) {
+    public Project(String nameProj, String abstractProj, String descProj, String funcProj, int state) {
         this.nameProj = nameProj;
         this.abstractProj = abstractProj;
         this.descProj = descProj;
         this.funcProj = funcProj;
         this.state = state;
-        this.nReq = nReq;
+        this.nReq = NREQ_DEFAULT;
     }
 
     public int getIdProj() {
