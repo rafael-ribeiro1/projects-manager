@@ -4,23 +4,23 @@ public class Study {
 
     private int idStu;
     private String nameStu;
-    private String from;
+    private String fromStu;
     private String link;
     private int nMod;
 
     private final int NMOD_DEFAULT = 0;
 
     public Study() {}
-    public Study(int idStu, String nameStu, String from, String link, int nMod) {
+    public Study(int idStu, String nameStu, String fromStu, String link, int nMod) {
         this.idStu = idStu;
         this.nameStu = nameStu;
-        this.from = from;
+        this.fromStu = fromStu;
         this.link = link;
         this.nMod = nMod;
     }
-    public Study(String nameStu, String from, String link) {
+    public Study(String nameStu, String fromStu, String link) {
         this.nameStu = nameStu;
-        this.from = from;
+        this.fromStu = fromStu;
         this.link = link;
         this.nMod = NMOD_DEFAULT;
     }
@@ -37,11 +37,11 @@ public class Study {
     public void setNameStu(String nameStu) {
         this.nameStu = nameStu;
     }
-    public String getFrom() {
-        return from;
+    public String getFromStu() {
+        return fromStu;
     }
-    public void setFrom(String from) {
-        this.from = from;
+    public void setFromStu(String fromStu) {
+        this.fromStu = fromStu;
     }
     public String getLink() {
         return link;

@@ -16,7 +16,7 @@ class Project {
 class Study {
     -int idStu
     -String nameStu
-    -String from
+    -String fromStu
     -String link
     -int nMod
 }
