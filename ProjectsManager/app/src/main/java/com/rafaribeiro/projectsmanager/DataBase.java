@@ -112,9 +112,9 @@ public class DataBase extends SQLiteOpenHelper {
     public void deleteProject(int idProj) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TB_PROJECT, COL_IDP + " = ?", new String[] {String.valueOf(idProj)});
-        ///////////////////
-        // Delete requirements
-        ///////////////////
+        /////////////////////////
+        // Delete requirements //
+        /////////////////////////
         db.close();
     }
     public Project selectProject(int idProj) {
@@ -131,6 +131,24 @@ public class DataBase extends SQLiteOpenHelper {
         }
         db.close();
         return project;
+    }
+    public Project selectProjectByPosition(int position) {
+        ArrayList<Project> projects = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_PROJECT, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Project project = new Project(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2),
+                        cursor.getString(3), cursor.getString(4), Integer.parseInt(cursor.getString(5)),
+                        Integer.parseInt(cursor.getString(6)));
+                projects.add(project);
+            } while (cursor.moveToNext());
+        }
+        if ((projects.size() > 0) && (position < projects.size())) {
+            return projects.get(position);
+        } else {
+            return null;
+        }
     }
     public void updateProject(Project project) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -191,6 +209,23 @@ public class DataBase extends SQLiteOpenHelper {
         }
         db.close();
         return study;
+    }
+    public Study selectStudyByPosition(int position) {
+        ArrayList<Study> studies = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_STUDY, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Study study = new Study(Integer.parseInt(cursor.getString(0)), cursor.getString(1),
+                        cursor.getString(2), cursor.getString(3), Integer.parseInt(cursor.getString(4)));
+                studies.add(study);
+            } while (cursor.moveToNext());
+        }
+        if ((studies.size() > 0) && (position < studies.size())) {
+            return studies.get(position);
+        } else {
+            return null;
+        }
     }
     public void updateStudy(Study study) {
         SQLiteDatabase db = this.getWritableDatabase();
