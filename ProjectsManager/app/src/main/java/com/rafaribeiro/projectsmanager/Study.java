@@ -1,5 +1,9 @@
 package com.rafaribeiro.projectsmanager;
 
+import android.content.Context;
+
+import java.util.ArrayList;
+
 public class Study {
 
     private int idStu;
@@ -54,5 +58,21 @@ public class Study {
     }
     public void setnMod(int nMod) {
         this.nMod = nMod;
+    }
+
+    public int getProgress(Context context) {
+        DataBase db = new DataBase(context);
+        if (this.nMod == -1) {
+            return 100;
+        } else if (this.nMod == 0) {
+            return 1;
+        } else {
+            ArrayList<Module> modules = db.selectModulesOfStudy(this.idStu);
+            int nRea = 0;
+            for (int i = 0; i < modules.size(); i++) {
+                if (modules.get(i).getState() == Module.REALIZED) nRea++;
+            }
+            return (nRea * 100) / modules.size();
+        }
     }
 }

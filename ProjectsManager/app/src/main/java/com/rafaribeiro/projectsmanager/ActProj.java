@@ -82,9 +82,10 @@ public class ActProj extends AppCompatActivity {
                                                 db.deleteProject(project.getIdProj());
                                                 dialog1.cancel();
                                                 dialog.cancel();
-                                                Intent intent = new Intent(ActProj.this, ActProj.class);
-                                                startActivity(intent);
-                                                ActProj.this.finish();
+                                                finish();
+                                                overridePendingTransition(0, 0);
+                                                startActivity(getIntent());
+                                                overridePendingTransition(0, 0);
                                             }
                                         })
                                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -124,6 +125,8 @@ public class ActProj extends AppCompatActivity {
             SimpleAdapter adapter = new SimpleAdapter(this, data, android.R.layout.simple_list_item_2,
                     new String[] {"name", "abstract"}, new int[] {android.R.id.text1, android.R.id.text2});
             listProj.setAdapter(adapter);
+        } else {
+            noProj.setVisibility(View.VISIBLE);
         }
     }
 }

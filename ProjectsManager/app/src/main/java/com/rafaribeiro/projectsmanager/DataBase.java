@@ -331,6 +331,21 @@ public class DataBase extends SQLiteOpenHelper {
         db.close();
         return module;
     }
+    public ArrayList<Module> selectModulesOfStudy(int studyId) {
+        String TB_MOD = "MOD" + studyId;
+        ArrayList<Module> modules = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_MOD + " WHERE " + COL_STUDYID + " = ?", new String[] {Integer.toString(studyId)});
+        if (cursor.moveToFirst()) {
+            do {
+                Module module = new Module(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
+                        cursor.getString(2), Integer.parseInt(cursor.getString(3)));
+                modules.add(module);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return modules;
+    }
     public void updateMod(Module module) {
         String TB_MOD = "MOD" + module.getStudyId();
         SQLiteDatabase db = this.getWritableDatabase();

@@ -7,4 +7,8 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="proj_del_message">Are you sure you want to delete this project?</string>
+    <string name="register_study">Register study</string>
+    <string name="stu_long_click_message">Are you sure you want to change the study?</string>
+    <string name="stu_del_message">Are you sure you want to delete this study?</string>
+    <string name="study_title">Study title</string>
 </resources>
