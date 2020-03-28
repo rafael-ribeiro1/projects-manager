@@ -70,7 +70,7 @@ public class Study {
             ArrayList<Module> modules = db.selectModulesOfStudy(this.idStu);
             int nRea = 0;
             for (int i = 0; i < modules.size(); i++) {
-                if (modules.get(i).getState() == Module.REALIZED) nRea++;
+                if (modules.get(i).getState() == Module.DONE) nRea++;
             }
             return (nRea * 100) / modules.size();
         }

@@ -11,4 +11,7 @@
     <string name="stu_long_click_message">Are you sure you want to change the study?</string>
     <string name="stu_del_message">Are you sure you want to delete this study?</string>
     <string name="study_title">Study title</string>
+    <string name="project_name">Project Name</string>
+    <string name="project_abstract">Project abstract</string>
+    <string name="project_state">Project State</string>
 </resources>

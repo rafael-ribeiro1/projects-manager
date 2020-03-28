@@ -108,9 +108,9 @@ public class ActStu extends AppCompatActivity {
 
         ArrayList<Study> studies = db.selectAllStudies();
         if (studies.size() > 0) {
-            noStu.setVisibility(View.GONE);
             StuListAdapter adapter = new StuListAdapter(this, studies);
             listStu.setAdapter(adapter);
+            noStu.setVisibility(View.GONE);
         } else {
             noStu.setVisibility(View.VISIBLE);
         }

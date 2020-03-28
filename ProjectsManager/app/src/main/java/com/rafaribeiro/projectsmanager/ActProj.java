@@ -39,9 +39,8 @@ public class ActProj extends AppCompatActivity {
         btnAddProj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Go to page AddProj
-                 */
+                Intent intent = new Intent(ActProj.this, ActAddProj.class);
+                startActivity(intent);
             }
         });
 
@@ -113,8 +112,10 @@ public class ActProj extends AppCompatActivity {
 
         ArrayList<Project> projects = db.selectAllProjects();
         if (projects.size() > 0) {
+            ProjListAdapter adapter = new ProjListAdapter(this, projects);
+            listProj.setAdapter(adapter);
             noProj.setVisibility(View.GONE);
-            List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+            /*List<Map<String, String>> data = new ArrayList<Map<String, String>>();
             for (int i = 0; i < projects.size(); i++) {
                 Map<String, String> datum = new HashMap<String, String>(2);
                 Project project = projects.get(i);
@@ -124,7 +125,7 @@ public class ActProj extends AppCompatActivity {
             }
             SimpleAdapter adapter = new SimpleAdapter(this, data, android.R.layout.simple_list_item_2,
                     new String[] {"name", "abstract"}, new int[] {android.R.id.text1, android.R.id.text2});
-            listProj.setAdapter(adapter);
+            listProj.setAdapter(adapter);*/
         } else {
             noProj.setVisibility(View.VISIBLE);
         }
