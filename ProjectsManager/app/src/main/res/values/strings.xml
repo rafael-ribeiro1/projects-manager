@@ -14,4 +14,15 @@
     <string name="project_name">Project Name</string>
     <string name="project_abstract">Project abstract</string>
     <string name="project_state">Project State</string>
+    <string name="name">Name</string>
+    <string name="abstract_">Abstract</string>
+    <string name="description">Description</string>
+    <string name="funcionalities">Funcionalities</string>
+    <string name="functionality">Functionality</string>
+    <string name="idea">Idea</string>
+    <string name="doing">Doing</string>
+    <string name="done">Done</string>
+    <string name="requirements">Requirements</string>
+    <string name="no_requirements">No requirements</string>
+    <string name="add_requirement">Add Requirement</string>
 </resources>

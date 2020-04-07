@@ -24,6 +24,7 @@ public class ActMain extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ActMain.this, ActProj.class);
                 startActivity(intent);
+                finish();
             }
         });
         btnStu.setOnClickListener(new View.OnClickListener() {
@@ -31,6 +32,7 @@ public class ActMain extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ActMain.this, ActStu.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

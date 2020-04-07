@@ -23,7 +23,7 @@ public class ActProj extends AppCompatActivity {
 
     DataBase db = new DataBase(this);
 
-    Button btnAddProj;
+    Button btnAddProj, btnBackProj;
     ConstraintLayout noProj;
     ListView listProj;
 
@@ -33,6 +33,7 @@ public class ActProj extends AppCompatActivity {
         setContentView(R.layout.activity_act_proj);
 
         btnAddProj = findViewById(R.id.btnAddProj);
+        btnBackProj = findViewById(R.id.btnBackProj);
         noProj = findViewById(R.id.noProj);
         listProj = findViewById(R.id.listProj);
 
@@ -129,5 +130,21 @@ public class ActProj extends AppCompatActivity {
         } else {
             noProj.setVisibility(View.VISIBLE);
         }
+
+        btnBackProj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActProj.this, ActMain.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ActProj.this, ActMain.class);
+        startActivity(intent);
+        finish();
     }
 }

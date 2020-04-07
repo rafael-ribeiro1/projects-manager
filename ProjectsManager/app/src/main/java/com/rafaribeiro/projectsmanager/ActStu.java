@@ -18,7 +18,7 @@ public class ActStu extends AppCompatActivity {
 
     DataBase db = new DataBase(this);
 
-    Button btnAddStu;
+    Button btnAddStu, btnBackStu;
     ConstraintLayout noStu;
     ListView listStu;
 
@@ -28,6 +28,7 @@ public class ActStu extends AppCompatActivity {
         setContentView(R.layout.activity_act_stu);
 
         btnAddStu = findViewById(R.id.btnAddStu);
+        btnBackStu = findViewById(R.id.btnBackStu);
         noStu = findViewById(R.id.noStu);
         listStu = findViewById(R.id.listStu);
 
@@ -114,5 +115,21 @@ public class ActStu extends AppCompatActivity {
         } else {
             noStu.setVisibility(View.VISIBLE);
         }
+
+        btnBackStu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActStu.this, ActMain.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ActStu.this, ActMain.class);
+        startActivity(intent);
+        finish();
     }
 }
