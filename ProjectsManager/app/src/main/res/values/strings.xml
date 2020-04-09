@@ -25,4 +25,8 @@
     <string name="requirements">Requirements</string>
     <string name="no_requirements">No requirements</string>
     <string name="add_requirement">Add Requirement</string>
+    <string name="choose_study">Choose Study</string>
+    <string name="or">or</string>
+    <string name="requirement">Requirement</string>
+    <string name="add">Add</string>
 </resources>

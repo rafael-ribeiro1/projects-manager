@@ -7,6 +7,7 @@ public class Requirement {
     private int studyId;
     private String req;
 
+    private final int PROJID_DEFAULT = 0;
     private final int STUID_DEFAULT = 0;
     private final String REQ_DEFAULT = "";
 
@@ -36,6 +37,16 @@ public class Requirement {
     }
     public Requirement(int projId, String req) {
         this.projId = projId;
+        this.studyId = STUID_DEFAULT;
+        this.req = req;
+    }
+    public Requirement(int studyId) {
+        this.projId = PROJID_DEFAULT;
+        this.studyId = studyId;
+        this.req = REQ_DEFAULT;
+    }
+    public Requirement(String req) {
+        this.projId = PROJID_DEFAULT;
         this.studyId = STUID_DEFAULT;
         this.req = req;
     }
