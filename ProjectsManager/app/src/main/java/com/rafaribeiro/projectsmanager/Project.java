@@ -26,13 +26,13 @@ public class Project implements State {
         this.state = state;
         this.nReq = nReq;
     }
-    public Project(String nameProj, String abstractProj, String descProj, String funcProj, int state) {
+    public Project(String nameProj, String abstractProj, String descProj, String funcProj, int state, int nReq) {
         this.nameProj = nameProj;
         this.abstractProj = abstractProj;
         this.descProj = descProj;
         this.funcProj = funcProj;
         this.state = state;
-        this.nReq = NREQ_DEFAULT;
+        this.nReq = nReq;
     }
 
     public int getIdProj() {

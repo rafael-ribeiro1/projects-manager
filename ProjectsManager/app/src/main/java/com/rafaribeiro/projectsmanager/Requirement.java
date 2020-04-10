@@ -40,15 +40,11 @@ public class Requirement {
         this.studyId = STUID_DEFAULT;
         this.req = req;
     }
-    public Requirement(int studyId) {
-        this.projId = PROJID_DEFAULT;
-        this.studyId = studyId;
-        this.req = REQ_DEFAULT;
-    }
-    public Requirement(String req) {
+    public Requirement(int idReq) {
+        this.idReq = idReq;
         this.projId = PROJID_DEFAULT;
         this.studyId = STUID_DEFAULT;
-        this.req = req;
+        this.req = REQ_DEFAULT;
     }
 
     public int getIdReq() {
@@ -74,5 +70,14 @@ public class Requirement {
     }
     public void setReq(String req) {
         this.req = req;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+
+        Requirement r = (Requirement)o;
+        return this.idReq == r.idReq;
     }
 }

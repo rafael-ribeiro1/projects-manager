@@ -2,20 +2,20 @@ package com.rafaribeiro.projectsmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +24,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ActAddProj extends AppCompatActivity {
+
+    DataBase db = new DataBase(this);
 
     Button btnBackAddProj, btnAddAddProj;
     EditText edtName, edtAbst, edtDesc, func_0;
@@ -36,6 +38,8 @@ public class ActAddProj extends AppCompatActivity {
     int nFunc = 0;
     ArrayList<Requirement> reqs;
     int nReq = 0;
+
+    private final String SEPARATOR = "/0//1/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +78,45 @@ public class ActAddProj extends AppCompatActivity {
         btnAddAddProj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Verification and Add code
-                 */
+                if (edtName.getText().toString().trim().isEmpty() ||
+                        edtAbst.getText().toString().trim().isEmpty() ||
+                        edtDesc.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(ActAddProj.this, R.string.add_proj_error, Toast.LENGTH_SHORT).show();
+                } else {
+                    String sfuncs = "";
+                    if (funcs.size() == 1) {
+                        sfuncs = funcs.get(0).getText().toString().trim();
+                    } else if (funcs.size() > 1) {
+                        sfuncs = funcs.get(0).getText().toString().trim();
+                        for (int i = 1; i < funcs.size(); i++) {
+                            EditText edt = funcs.get(i);
+                            sfuncs += SEPARATOR + edt.getText().toString().trim();
+                        }
+                    }
+                    int state = 0;
+                    switch (radState.getCheckedRadioButtonId()) {
+                        case R.id.radState1:
+                            state = State.TO_DO;
+                            break;
+                        case R.id.radState2:
+                            state = State.DOING;
+                            break;
+                        case R.id.radState3:
+                            state = State.DONE;
+                            break;
+                    }
+                    Project project = new Project(edtName.getText().toString().trim(),
+                            edtAbst.getText().toString().trim(), edtDesc.getText().toString().trim(),
+                            sfuncs, state, reqs.size());
+                    int idProj = (int)db.insertProject(project);
+                    for (Requirement r: reqs) {
+                        r.setProjId(idProj);
+                        db.insertReq(r);
+                    }
+                    Intent intent = new Intent(ActAddProj.this, ActProj.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -104,6 +144,31 @@ public class ActAddProj extends AppCompatActivity {
             edt.addTextChangedListener(funcTextChanged);
         }
 
+        // On delete requirement button click listener
+        final View.OnClickListener delReqListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tag = v.getTag().toString();
+                int idReq;
+                try {
+                    idReq = Integer.parseInt(tag.split("_")[1]);
+                } catch (Exception e) {
+                    idReq = -1;
+                    Log.e("error", e.getMessage());
+                }
+                if (idReq != -1) {
+                    String tagRL = "reqRL_" + idReq;
+                    RelativeLayout rl = (RelativeLayout)v.getRootView().findViewWithTag(tagRL);
+                    req.removeView(rl);
+                    Requirement requirement = new Requirement(idReq);
+                    reqs.remove(requirement);
+                    if (reqs.size() == 0) noReq.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(ActAddProj.this, "Error deleting requirement", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
         // On AddReq Button clicked
         btnAddReq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +184,32 @@ public class ActAddProj extends AppCompatActivity {
                 btnChooseStudy.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        ArrayList<Study> studies = db.selectAllStudies();
+                        if (studies.size() == 0) {
+                            Toast.makeText(ActAddProj.this, "There are no studies registered", Toast.LENGTH_SHORT).show();
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ActAddProj.this);
+                            builder.setTitle(R.string.choose_study);
+                            String[] items = new String[studies.size()];
+                            for (int i = 0; i < studies.size(); i++) {
+                                Study s = studies.get(i);
+                                items[i] = s.getNameStu();
+                            }
+                            builder.setItems(items, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Study selected = db.selectStudyByPosition(which);
+                                    Requirement req = new Requirement(nReq, 0, selected.getNameStu());
+                                    reqs.add(req);
+                                    addReqRL(req, delReqListener);
+                                    dialog.cancel();
+                                }
+                            });
+                            AlertDialog dialog2 = builder.create();
+                            dialog2.setCancelable(true);
+                            dialog.cancel();
+                            dialog2.show();
+                        }
                     }
                 });
                 btnAddReq.setOnClickListener(new View.OnClickListener() {
@@ -128,9 +218,9 @@ public class ActAddProj extends AppCompatActivity {
                         if (edtReq.getText().toString().trim().equals("")) {
                             Toast.makeText(ActAddProj.this, "Empty requirement", Toast.LENGTH_SHORT).show();
                         } else {
-                            Requirement req = new Requirement(edtReq.getText().toString().trim());
+                            Requirement req = new Requirement(nReq, 0, edtReq.getText().toString().trim());
                             reqs.add(req);
-                            addReqRL(req);
+                            addReqRL(req, delReqListener);
                             dialog.cancel();
                         }
                     }
@@ -160,7 +250,7 @@ public class ActAddProj extends AppCompatActivity {
         funcs.add(newFunc);
     }
 
-    private void addReqRL(Requirement requirement) {
+    private void addReqRL(Requirement requirement, View.OnClickListener delReqListener) {
         RelativeLayout reqRL = new RelativeLayout(this);
         reqRL.setTag("reqRL_" + nReq);
         reqRL.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
@@ -181,12 +271,12 @@ public class ActAddProj extends AppCompatActivity {
         btnDelReq.setTag("delReq_" + nReq);
         btnDelReq.setImageResource(android.R.drawable.ic_delete);
         btnDelReq.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        btnDelReq.setOnClickListener(delReqListener);
         if (requirement.getStudyId() == 0) {
             tvReq.setText(requirement.getReq());
         } else {
-            /*
-            Study selected
-             */
+            Study study = db.selectStudy(requirement.getStudyId());
+            tvReq.setText(study.getNameStu());
         }
         reqRL.addView(tvReq);
         reqRL.addView(btnDelReq);
