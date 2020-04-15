@@ -19,6 +19,20 @@ public class Module implements State {
         this.title = title;
         this.state = state;
     }
+    public Module(int studyId, String title) {
+        this.studyId = studyId;
+        this.title = title;
+        this.state = TO_DO;
+    }
+    public Module(int idMod, int studyId, String title) {
+        this.idMod = idMod;
+        this.studyId = studyId;
+        this.title = title;
+        this.state = TO_DO;
+    }
+    public Module(int idMod) {
+        this.idMod = idMod;
+    }
 
     public int getIdMod() {
         return idMod;
@@ -43,5 +57,14 @@ public class Module implements State {
     }
     public void setState(int state) {
         this.state = state;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+
+        Module m = (Module)o;
+        return this.idMod == m.idMod;
     }
 }

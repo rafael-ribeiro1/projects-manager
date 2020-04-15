@@ -199,7 +199,7 @@ public class ActAddProj extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Study selected = db.selectStudyByPosition(which);
-                                    Requirement req = new Requirement(nReq, 0, selected.getNameStu());
+                                    Requirement req = new Requirement(nReq, 0, selected.getIdStu());
                                     reqs.add(req);
                                     addReqRL(req, delReqListener);
                                     dialog.cancel();

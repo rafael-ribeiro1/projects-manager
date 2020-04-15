@@ -35,9 +35,8 @@ public class ActStu extends AppCompatActivity {
         btnAddStu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Go to page AddStu
-                 */
+                Intent intent = new Intent(ActStu.this, ActAddStu.class);
+                startActivity(intent);
             }
         });
 
