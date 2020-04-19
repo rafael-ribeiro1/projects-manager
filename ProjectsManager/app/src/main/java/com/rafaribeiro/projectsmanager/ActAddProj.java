@@ -109,6 +109,7 @@ public class ActAddProj extends AppCompatActivity {
                             edtAbst.getText().toString().trim(), edtDesc.getText().toString().trim(),
                             sfuncs, state, reqs.size());
                     int idProj = (int)db.insertProject(project);
+                    db.createTableReq(idProj);
                     for (Requirement r: reqs) {
                         r.setProjId(idProj);
                         db.insertReq(r);

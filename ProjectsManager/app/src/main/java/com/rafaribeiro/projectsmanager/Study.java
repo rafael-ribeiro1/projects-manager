@@ -22,6 +22,12 @@ public class Study {
         this.link = link;
         this.nMod = nMod;
     }
+    public Study(String nameStu, String fromStu, String link, int nMod) {
+        this.nameStu = nameStu;
+        this.fromStu = fromStu;
+        this.link = link;
+        this.nMod = nMod;
+    }
     public Study(String nameStu, String fromStu, String link) {
         this.nameStu = nameStu;
         this.fromStu = fromStu;

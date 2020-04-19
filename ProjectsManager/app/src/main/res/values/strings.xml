@@ -36,4 +36,7 @@
     <string name="add_module">Add Module</string>
     <string name="no_modules">No modules</string>
     <string name="title">Title</string>
+    <string name="fill_stu_name">Fill Study name</string>
+    <string name="simply_realized">Simply realized</string>
+    <string name="simply_done">Simply done</string>
 </resources>

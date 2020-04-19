@@ -3,6 +3,7 @@ package com.rafaribeiro.projectsmanager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,7 @@ public class ActAddStu extends AppCompatActivity {
     LinearLayout mod;
     ImageButton btnAddMod;
     TextView noMod;
+    CheckBox cbSDone;
 
     ArrayList<Module> mods;
     int nMod = 0;
@@ -44,6 +46,7 @@ public class ActAddStu extends AppCompatActivity {
         mod = findViewById(R.id.modAddStu);
         btnAddMod = findViewById(R.id.btnAddModAddStu);
         noMod = findViewById(R.id.noModAddStu);
+        cbSDone = findViewById(R.id.cbSDoneAddStu);
 
         // Modules ArrayList inicialization
         mods = new ArrayList<>();
@@ -60,10 +63,24 @@ public class ActAddStu extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Verification and Add Stu code
-                Add Modules
-                 */
+                if (edtName.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(ActAddStu.this, R.string.fill_stu_name, Toast.LENGTH_SHORT).show();
+                } else {
+                    int inMod = mods.size() > 0 ? mods.size() : (cbSDone.isChecked() ? -1 : 0);
+                    Study study = new Study(edtName.getText().toString().trim(),
+                            edtFrom.getText().toString().trim(), edtLink.getText().toString().trim(), inMod);
+                    int idStu = (int)db.insertStudy(study);
+                    db.createTableMod(idStu);
+                    for (Module m: mods) {
+                        m.setStudyId(idStu);
+                        CheckBox cbMod = v.getRootView().findViewWithTag("doneMod_" + m.getIdMod());
+                        m.setState(cbMod.isChecked() ? Module.DONE : Module.TO_DO);
+                        db.insertMod(m);
+                    }
+                    Intent intent = new Intent(ActAddStu.this, ActStu.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -85,7 +102,10 @@ public class ActAddStu extends AppCompatActivity {
                     mod.removeView(rl);
                     Module module = new Module(idMod);
                     mods.remove(module);
-                    if (mods.size() == 0) noMod.setVisibility(View.VISIBLE);
+                    if (mods.size() == 0) {
+                        noMod.setVisibility(View.VISIBLE);
+                        cbSDone.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     Toast.makeText(ActAddStu.this, "Error deleting module", Toast.LENGTH_SHORT).show();
                 }
@@ -162,6 +182,7 @@ public class ActAddStu extends AppCompatActivity {
         modRL.addView(btnDelMod);
         mod.addView(modRL);
         noMod.setVisibility(View.GONE);
+        cbSDone.setVisibility(View.GONE);
         nMod++;
     }
 }
