@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActAddStu"></activity>
+        <activity android:name=".ActShowStu"></activity>
+        <activity android:name=".ActShowProj" />
+        <activity android:name=".ActAddStu" />
         <activity android:name=".ActAddProj" />
         <activity android:name=".ActStu" />
         <activity android:name=".ActProj" />

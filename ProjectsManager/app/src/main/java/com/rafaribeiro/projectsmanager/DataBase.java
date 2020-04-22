@@ -112,9 +112,7 @@ public class DataBase extends SQLiteOpenHelper {
     public void deleteProject(int idProj) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TB_PROJECT, COL_IDP + " = ?", new String[] {String.valueOf(idProj)});
-        /////////////////////////
-        // Delete requirements //
-        /////////////////////////
+        deleteTableReq(idProj);
         db.close();
     }
     public Project selectProject(int idProj) {
@@ -194,6 +192,7 @@ public class DataBase extends SQLiteOpenHelper {
     public void deleteStudy(int idStu) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TB_STUDY, COL_IDS + " = ?", new String[] {String.valueOf(idStu)});
+        deleteTableMod(idStu);
         db.close();
     }
     public Study selectStudy(int idStu) {
@@ -285,6 +284,21 @@ public class DataBase extends SQLiteOpenHelper {
         }
         db.close();
         return requirement;
+    }
+    public ArrayList<Requirement> selectReqsOfProject(int projId) {
+        String TB_REQ = "REQ" + projId;
+        ArrayList<Requirement> reqs = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_REQ + " WHERE " + COL_PROJID + " = ?", new String[] {Integer.toString(projId)});
+        if (cursor.moveToFirst()) {
+            do {
+                Requirement req = new Requirement(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
+                        Integer.parseInt(cursor.getString(2)), cursor.getString(3));
+                reqs.add(req);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return reqs;
     }
     public void updateReq(Requirement requirement) {
         String TB_REQ = "REQ" + requirement.getProjId();

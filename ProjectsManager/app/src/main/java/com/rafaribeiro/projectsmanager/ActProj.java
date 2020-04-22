@@ -49,9 +49,10 @@ public class ActProj extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Project project = db.selectProjectByPosition(position);
-                /*
-                Go to project page
-                 */
+                Intent intent = new Intent(ActProj.this, ActShowProj.class);
+                intent.putExtra("PROJID", project.getIdProj());
+                startActivity(intent);
+                finish();
             }
         });
         listProj.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

@@ -44,9 +44,10 @@ public class ActStu extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Study study = db.selectStudyByPosition(position);
-                /*
-                Go to Study page
-                 */
+                Intent intent = new Intent(ActStu.this, ActShowStu.class);
+                intent.putExtra("STUID", study.getIdStu());
+                startActivity(intent);
+                finish();
             }
         });
         listStu.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
