@@ -1,7 +1,9 @@
 package com.rafaribeiro.projectsmanager;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -33,9 +35,7 @@ public class ActShowProj extends AppCompatActivity {
         // Firstly verify if one valid ProjectID was passed via Intent. If not, goes to Project List Activity
         id = getIntent().getIntExtra("PROJID", 0);
         Project project = db.selectProject(id);
-        if (project == null) {
-            goBack();
-        }
+        if (project == null) goBack();
 
         // Views
         btnBack = findViewById(R.id.btnBackShowProj);
@@ -116,10 +116,25 @@ public class ActShowProj extends AppCompatActivity {
         btnDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.deleteProject(id);
-                Intent intent = new Intent(ActShowProj.this, ActProj.class);
-                startActivity(intent);
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActShowProj.this);
+                builder.setMessage(getResources().getString(R.string.proj_del_message))
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                db.deleteProject(id);
+                                dialog.cancel();
+                                goBack();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog delete = builder.create();
+                delete.show();
             }
         });
 

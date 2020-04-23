@@ -1,9 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ActShowStu">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnBackShowStu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:drawableStart="?attr/homeAsUpIndicator"
+            android:text="" />
+
+        <Button
+            android:id="@+id/btnDelShowStu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:drawableEnd="@android:drawable/ic_menu_delete"
+            android:text="" />
+
+        <Button
+            android:id="@+id/btnEditShowStu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:drawableEnd="@android:drawable/ic_menu_edit"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tvNameShowStu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/study_name"
+            android:textColor="@android:color/black"
+            android:textSize="23sp"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp" >
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/from"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                android:textStyle="bold|italic"/>
+
+            <TextView
+                android:id="@+id/tvFromShowStu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/from"
+                android:layout_marginBottom="10dp"
+                android:textColor="@android:color/secondary_text_light"/>
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/link"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                android:textStyle="bold|italic"/>
+
+            <TextView
+                android:id="@+id/tvLinkShowStu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:autoLink="web"
+                android:text="@string/link"
+                android:textColor="@android:color/secondary_text_light" />
+
+            <LinearLayout
+                android:id="@+id/modShowStu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/rounded_border"
+                android:padding="13dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modules"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold|italic"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/noModShowStu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_modules" />
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/cbSDoneShowStu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/simply_done" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

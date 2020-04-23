@@ -74,7 +74,7 @@ public class ActProj extends AppCompatActivity {
                             @Override
                             public void onClick(final DialogInterface dialog, int which) {
                                 AlertDialog.Builder builder2 = new AlertDialog.Builder(ActProj.this);
-                                builder2.setMessage(R.string.proj_del_message)
+                                builder2.setMessage(getResources().getString(R.string.proj_del_message))
                                         .setCancelable(false)
                                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                             @Override
