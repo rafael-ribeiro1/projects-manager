@@ -65,9 +65,10 @@ public class ActProj extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Project project = db.selectProjectByPosition(position);
-                                /*
-                                Go to edit project page
-                                 */
+                                Intent intent = new Intent(ActProj.this, ActEditProj.class);
+                                intent.putExtra("PROJID", project.getIdProj());
+                                startActivity(intent);
+                                finish();
                             }
                         })
                         .setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {

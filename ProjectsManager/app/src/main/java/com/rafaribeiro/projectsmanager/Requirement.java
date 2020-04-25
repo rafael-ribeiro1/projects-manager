@@ -80,4 +80,5 @@ public class Requirement {
         Requirement r = (Requirement)o;
         return this.idReq == r.idReq;
     }
+
 }

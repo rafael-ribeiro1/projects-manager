@@ -142,9 +142,10 @@ public class ActShowProj extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Go to Edit Project Activity (with PROJID extra)
-                 */
+                Intent intent = new Intent(ActShowProj.this, ActEditProj.class);
+                intent.putExtra("PROJID", id);
+                startActivity(intent);
+                finish();
             }
         });
     }

@@ -71,7 +71,7 @@ public class DataBase extends SQLiteOpenHelper {
     public void deleteTableReq(int projId) {
         String TB_REQ = "REQ" + projId;
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS " + TB_REQ);
+        db.execSQL("DELETE FROM " + TB_REQ);
         db.close();
     }
 
@@ -87,7 +87,7 @@ public class DataBase extends SQLiteOpenHelper {
     public void deleteTableMod(int studyId) {
         String TB_MOD = "MOD" + studyId;
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS " + TB_MOD);
+        db.execSQL("DELETE FROM " + TB_MOD);
         db.close();
     }
 
