@@ -60,9 +60,10 @@ public class ActStu extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Study study = db.selectStudyByPosition(position);
-                                /*
-                                Go to edit study page
-                                 */
+                                Intent intent = new Intent(ActStu.this, ActEditStu.class);
+                                intent.putExtra("STUID", study.getIdStu());
+                                startActivity(intent);
+                                finish();
                             }
                         })
                         .setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {

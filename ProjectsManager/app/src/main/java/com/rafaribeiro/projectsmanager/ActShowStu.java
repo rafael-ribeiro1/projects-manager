@@ -113,9 +113,11 @@ public class ActShowStu extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Go to edit page with STUID
-                 */
+                Intent intent = new Intent(ActShowStu.this, ActEditStu.class);
+                intent.putExtra("STUID", id);
+                intent.putExtra("FROMPROJ", fromProj);
+                startActivity(intent);
+                finish();
             }
         });
     }
