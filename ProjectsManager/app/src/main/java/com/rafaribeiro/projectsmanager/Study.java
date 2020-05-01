@@ -81,4 +81,5 @@ public class Study {
             return (nRea * 100) / modules.size();
         }
     }
+
 }

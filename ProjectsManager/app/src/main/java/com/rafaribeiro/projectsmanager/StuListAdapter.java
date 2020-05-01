@@ -36,12 +36,16 @@ public class StuListAdapter extends ArrayAdapter<Study> {
         if (study != null) {
             TextView stuListTitle = (TextView)v.findViewById(R.id.stuListTitle);
             ProgressBar stuListProgress = (ProgressBar)v.findViewById(R.id.stuListProgress);
+            TextView stuListID = (TextView)v.findViewById(R.id.stuListID);
 
             if (stuListTitle != null) {
                 stuListTitle.setText(study.getNameStu());
             }
             if (stuListProgress != null) {
                 stuListProgress.setProgress(study.getProgress(mContext));
+            }
+            if (stuListID != null) {
+                stuListID.setText(Integer.toString(study.getIdStu()));
             }
         }
 

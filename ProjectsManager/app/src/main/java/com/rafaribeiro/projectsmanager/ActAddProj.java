@@ -70,7 +70,7 @@ public class ActAddProj extends AppCompatActivity {
         btnBackAddProj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActAddProj.super.onBackPressed();
+                onBackPressed();
             }
         });
 
@@ -286,4 +286,10 @@ public class ActAddProj extends AppCompatActivity {
         nReq++;
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ActAddProj.this, ActProj.class);
+        startActivity(intent);
+        finish();
+    }
 }

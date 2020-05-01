@@ -37,6 +37,7 @@ public class ProjListAdapter extends ArrayAdapter<Project> {
             TextView projListName = (TextView)v.findViewById(R.id.projListName);
             ImageView projListState = (ImageView)v.findViewById(R.id.projListState);
             TextView projListAbstract = (TextView)v.findViewById(R.id.projListAbstract);
+            TextView projListID = (TextView)v.findViewById(R.id.projListID);
 
             if (projListName != null) {
                 projListName.setText(project.getNameProj());
@@ -56,6 +57,9 @@ public class ProjListAdapter extends ArrayAdapter<Project> {
             }
             if (projListAbstract != null) {
                 projListAbstract.setText(project.getAbstractProj());
+            }
+            if (projListID != null) {
+                projListID.setText(Integer.toString(project.getIdProj()));
             }
         }
 

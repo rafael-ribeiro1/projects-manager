@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,13 +44,16 @@ public class ActProj extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ActProj.this, ActAddProj.class);
                 startActivity(intent);
+                finish();
             }
         });
 
         listProj.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Project project = db.selectProjectByPosition(position);
+                TextView projListID = (TextView)view.findViewById(R.id.projListID);
+                Project project = db.selectProject(Integer.parseInt(projListID.getText().toString()));
+                //Project project = db.selectProjectByPosition(position);
                 Intent intent = new Intent(ActProj.this, ActShowProj.class);
                 intent.putExtra("PROJID", project.getIdProj());
                 startActivity(intent);
@@ -57,14 +62,16 @@ public class ActProj extends AppCompatActivity {
         });
         listProj.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(ActProj.this);
                 builder.setMessage(R.string.proj_long_click_message)
                         .setCancelable(false)
                         .setPositiveButton(R.string.edit, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Project project = db.selectProjectByPosition(position);
+                                TextView projListID = (TextView)view.findViewById(R.id.projListID);
+                                Project project = db.selectProject(Integer.parseInt(projListID.getText().toString()));
+                                //Project project = db.selectProjectByPosition(position);
                                 Intent intent = new Intent(ActProj.this, ActEditProj.class);
                                 intent.putExtra("PROJID", project.getIdProj());
                                 startActivity(intent);
@@ -80,7 +87,9 @@ public class ActProj extends AppCompatActivity {
                                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog1, int which) {
-                                                Project project = db.selectProjectByPosition(position);
+                                                TextView projListID = (TextView)view.findViewById(R.id.projListID);
+                                                Project project = db.selectProject(Integer.parseInt(projListID.getText().toString()));
+                                                //Project project = db.selectProjectByPosition(position);
                                                 db.deleteProject(project.getIdProj());
                                                 dialog1.cancel();
                                                 dialog.cancel();
@@ -114,21 +123,11 @@ public class ActProj extends AppCompatActivity {
         });
 
         ArrayList<Project> projects = db.selectAllProjects();
+        ArrayList<Project> projList = sortProjList(projects);
         if (projects.size() > 0) {
-            ProjListAdapter adapter = new ProjListAdapter(this, projects);
+            ProjListAdapter adapter = new ProjListAdapter(this, projList);
             listProj.setAdapter(adapter);
             noProj.setVisibility(View.GONE);
-            /*List<Map<String, String>> data = new ArrayList<Map<String, String>>();
-            for (int i = 0; i < projects.size(); i++) {
-                Map<String, String> datum = new HashMap<String, String>(2);
-                Project project = projects.get(i);
-                datum.put("name", project.getNameProj());
-                datum.put("abstract", project.getAbstractProj());
-                data.add(datum);
-            }
-            SimpleAdapter adapter = new SimpleAdapter(this, data, android.R.layout.simple_list_item_2,
-                    new String[] {"name", "abstract"}, new int[] {android.R.id.text1, android.R.id.text2});
-            listProj.setAdapter(adapter);*/
         } else {
             noProj.setVisibility(View.VISIBLE);
         }
@@ -141,6 +140,14 @@ public class ActProj extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private ArrayList<Project> sortProjList(ArrayList<Project> projects) {
+        ArrayList<Project> projList = new ArrayList<>();
+        for (Project project: projects) if (project.getState() == Project.DOING) projList.add(project);
+        for (Project project: projects) if (project.getState() == Project.TO_DO) projList.add(project);
+        for (Project project: projects) if (project.getState() == Project.DONE) projList.add(project);
+        return projList;
     }
 
     @Override

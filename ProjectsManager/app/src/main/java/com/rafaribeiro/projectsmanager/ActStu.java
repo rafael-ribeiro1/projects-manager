@@ -11,8 +11,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ActStu extends AppCompatActivity {
 
@@ -37,13 +39,16 @@ public class ActStu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ActStu.this, ActAddStu.class);
                 startActivity(intent);
+                finish();
             }
         });
 
         listStu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Study study = db.selectStudyByPosition(position);
+                TextView stuListID = (TextView)view.findViewById(R.id.stuListID);
+                Study study = db.selectStudy(Integer.parseInt(stuListID.getText().toString()));
+                //Study study = db.selectStudyByPosition(position);
                 Intent intent = new Intent(ActStu.this, ActShowStu.class);
                 intent.putExtra("STUID", study.getIdStu());
                 startActivity(intent);
@@ -52,14 +57,16 @@ public class ActStu extends AppCompatActivity {
         });
         listStu.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(ActStu.this);
                 builder.setMessage(R.string.stu_long_click_message)
                         .setCancelable(false)
                         .setPositiveButton(R.string.edit, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Study study = db.selectStudyByPosition(position);
+                                TextView stuListID = (TextView)view.findViewById(R.id.stuListID);
+                                Study study = db.selectStudy(Integer.parseInt(stuListID.getText().toString()));
+                                //Study study = db.selectStudyByPosition(position);
                                 Intent intent = new Intent(ActStu.this, ActEditStu.class);
                                 intent.putExtra("STUID", study.getIdStu());
                                 startActivity(intent);
@@ -75,7 +82,9 @@ public class ActStu extends AppCompatActivity {
                                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog1, int which) {
-                                                Study study = db.selectStudyByPosition(position);
+                                                TextView stuListID = (TextView)view.findViewById(R.id.stuListID);
+                                                Study study = db.selectStudy(Integer.parseInt(stuListID.getText().toString()));
+                                                //Study study = db.selectStudyByPosition(position);
                                                 db.deleteStudy(study.getIdStu());
                                                 dialog1.cancel();
                                                 dialog.cancel();
@@ -109,8 +118,9 @@ public class ActStu extends AppCompatActivity {
         });
 
         ArrayList<Study> studies = db.selectAllStudies();
+        ArrayList<Study> stuList = sortStuList(studies);
         if (studies.size() > 0) {
-            StuListAdapter adapter = new StuListAdapter(this, studies);
+            StuListAdapter adapter = new StuListAdapter(this, stuList);
             listStu.setAdapter(adapter);
             noStu.setVisibility(View.GONE);
         } else {
@@ -125,6 +135,20 @@ public class ActStu extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private ArrayList<Study> sortStuList(ArrayList<Study> studies) {
+        Comparator<Study> comparator = new Comparator<Study>() {
+            @Override
+            public int compare(Study s1, Study s2) {
+                int prog1 = s1.getProgress(ActStu.this);
+                int prog2 = s2.getProgress(ActStu.this);
+
+                return prog1 - prog2;
+            }
+        };
+        studies.sort(comparator);
+        return studies;
     }
 
     @Override

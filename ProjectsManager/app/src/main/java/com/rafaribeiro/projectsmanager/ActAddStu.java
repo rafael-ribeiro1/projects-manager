@@ -55,7 +55,7 @@ public class ActAddStu extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActAddStu.super.onBackPressed();
+                onBackPressed();
             }
         });
 
@@ -184,5 +184,12 @@ public class ActAddStu extends AppCompatActivity {
         noMod.setVisibility(View.GONE);
         cbSDone.setVisibility(View.GONE);
         nMod++;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ActAddStu.this, ActStu.class);
+        startActivity(intent);
+        finish();
     }
 }
